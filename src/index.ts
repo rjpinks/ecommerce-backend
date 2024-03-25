@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import sequelize from "./config/connection";
+import "./models/index";
 
 // Initializing dotenv and express
 dotenv.config()
@@ -13,11 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Stand in route
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, TypeScript Express!');
+    res.send('Why this no make tables :(');
 });
 
 // Starts the app
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}!`);
   });

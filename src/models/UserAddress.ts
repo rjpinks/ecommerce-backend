@@ -1,10 +1,31 @@
-// import important parts of sequelize library
-import { Model, DataTypes, Sequelize} from 'sequelize';
-// import our database connection from config.js
-const sequelize = require('../config/connection');
+import { Model, DataTypes, Optional } from 'sequelize';
+import sequelize from '../config/connection';
 
-// Initialize UserAddress model (table) by extending off Sequelize's Model class
-class UserAddress extends Model {}
+interface UserAddressAttributes {
+    id: number;
+    addressLine1: string;
+    addressLine2?: string | null;
+    city: string;
+    postalCode: number;
+    country: string;
+    telephone: string;
+    modifiedAt?: Date | null;
+}
+
+interface UserAddressCreationAttributes extends Optional<UserAddressAttributes, 'id'> {}
+
+class UserAddress extends Model<UserAddressAttributes, UserAddressCreationAttributes> implements UserAddressAttributes {
+    public id!: number;
+    public addressLine1!: string;
+    public addressLine2?: string | null;
+    public city!: string;
+    public postalCode!: number;
+    public country!: string;
+    public telephone!: string;
+
+    // timestamp
+    public modifiedAt?: Date | null;
+}
 
 // set up fields and rules for UserAddress model
 UserAddress.init(
@@ -38,6 +59,10 @@ UserAddress.init(
     telephone: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    modifiedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
     }
 },
 {
@@ -49,4 +74,4 @@ UserAddress.init(
   }
 )
 
-module.exports = UserAddress;
+export default UserAddress;

@@ -1,10 +1,35 @@
-// import important parts of sequelize library
-import { Model, DataTypes, Sequelize} from 'sequelize';
-// import our database connection from config.js
-const sequelize = require('../config/connection');
+import { Model, DataTypes, Optional } from 'sequelize';
+import sequelize from '../config/connection';
 
-// Initialize Product model (table) by extending off Sequelize's Model class
-class Product extends Model {}
+interface ProductAttributes {
+    id: number;
+    bookName: string;
+    authorLast: string;
+    imgUrl: string;
+    description: string
+    isbn: number;
+    genre: string;
+    priceInCents: number;
+    createdAt: Date;
+    modifiedAt?: Date | null;
+}
+
+interface ProductCreationAttributes extends Optional<ProductAttributes, 'id'> {}
+
+class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
+    public id!: number;
+    public bookName!: string;
+    public authorLast!: string;
+    public imgUrl!: string;
+    public description!: string;
+    public isbn!: number;
+    public genre!: string;
+    public priceInCents!: number;
+
+    // timestamps
+    public readonly createdAt!: Date;
+    public modifiedAt?: Date | null;
+}
 
 // set up fields and rules for Product model
 Product.init(
@@ -28,7 +53,7 @@ Product.init(
         allowNull: false,
     },
     description: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     isbn: {
@@ -49,15 +74,6 @@ Product.init(
     },
     modifiedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
-    },
-    orderItemsId: {
-        type: DataTypes.INTEGER,
-        //foriegnKey goes here?
-        references: {
-            model: "orderItems",
-            key: "id"
-        },
         allowNull: true,
     },
 },
@@ -70,4 +86,4 @@ Product.init(
   }
 )
 
-module.exports = Product;
+export default Product;

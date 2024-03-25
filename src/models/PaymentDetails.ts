@@ -1,10 +1,29 @@
-// import important parts of sequelize library
-import { Model, DataTypes, Sequelize} from 'sequelize';
-// import our database connection from config.js
-const sequelize = require('../config/connection');
+import { Model, DataTypes, Optional } from 'sequelize';
+import sequelize from '../config/connection';
 
-// Initialize PaymentDetails model (table) by extending off Sequelize's Model class
-class PaymentDetails extends Model {}
+interface PaymentDetailsAttributes {
+    id: number;
+    orderNumber: number;
+    amountInCents: number;
+    paymentProvider: string;
+    orderStatus: string;
+    createdAt: Date;
+    modifiedAt?: Date | null;
+}
+
+interface PaymentDetailsCreationAttributes extends Optional<PaymentDetailsAttributes, 'id'> {}
+
+class PaymentDetails extends Model<PaymentDetailsAttributes, PaymentDetailsCreationAttributes> implements PaymentDetailsAttributes {
+    public id!: number;
+    public orderNumber!: number;
+    public amountInCents!: number;
+    public paymentProvider!: string;
+    public orderStatus!: string;
+
+    // timestamps
+    public readonly createdAt!: Date;
+    public modifiedAt?: Date | null;
+}
 
 // set up fields and rules for PaymentDetails model
 PaymentDetails.init(
@@ -38,7 +57,7 @@ PaymentDetails.init(
     },
     modifiedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
 },
 {
@@ -50,4 +69,4 @@ PaymentDetails.init(
   }
 )
 
-module.exports = PaymentDetails;
+export default PaymentDetails;

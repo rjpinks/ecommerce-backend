@@ -9,10 +9,10 @@ interface UserProfileAttributes {
     password: string;
     firstName: string;
     lastName: string;
-    createdAt: Date;
-    modifiedAt: Date;
     addressId?: number | null;
     userPaymentId?: number | null;
+    createdAt: Date;
+    modifiedAt?: Date | null;
 }
 
 interface UserProfileCreationAttributes extends Optional<UserProfileAttributes, 'id'> {}
@@ -28,7 +28,7 @@ class UserProfile extends Model<UserProfileAttributes, UserProfileCreationAttrib
     public userPaymentId!: number | null;
 
     // timestamps
-    public modifiedAt!: Date;
+    public modifiedAt?: Date | null;
     public readonly createdAt!: Date;
 
 
@@ -64,19 +64,11 @@ UserProfile.init(
         type: DataTypes.STRING(20),
         allowNull: false,
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
-    modifiedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
     addressId: {
         type: DataTypes.INTEGER,
         //foriegnKey goes here
         references: {
-            model: "userAddressId",
+            model: "userAddress",
             key: "id"
         },
         allowNull: true,
@@ -88,7 +80,15 @@ UserProfile.init(
             key: "id"
         },
         allowNull: true
-    }
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    modifiedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
 },
 {
     sequelize,

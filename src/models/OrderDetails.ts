@@ -7,15 +7,15 @@ import PaymentDetails from './PaymentDetails';
 interface OrderDetailsAttributes {
     id: number;
     totalInCents: number;
-    createdAt: Date;
-    modifiedAt: Date;
     userProfileId?: number | null;
     paymentDetailsId?: number | null;
+    createdAt: Date;
+    modifiedAt?: Date | null;
 }
 
 interface OrderDetailsCreationAttributes extends Optional<OrderDetailsAttributes, 'id'> {}
 
-class OrderDetails extends Model<OrderDetailsAttributes, OrderDetailsCreationAttributes> implements UserProfileAttributes {
+class OrderDetails extends Model<OrderDetailsAttributes, OrderDetailsCreationAttributes> implements OrderDetailsAttributes {
     public id!: number;
     public totalInCents!: number;
     // foreign keys
@@ -24,7 +24,7 @@ class OrderDetails extends Model<OrderDetailsAttributes, OrderDetailsCreationAtt
     
     // timestamps
     public readonly createdAt!: Date;
-    public modifiedAt!: Date;
+    public modifiedAt?: Date | null;
 
     public static associate() {
         OrderDetails.belongsTo(UserProfile, { foreignKey: "userProfileId" });
@@ -50,7 +50,7 @@ OrderDetails.init(
     },
     modifiedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     userProfileId: {
         type: DataTypes.INTEGER,
@@ -59,6 +59,7 @@ OrderDetails.init(
             model: "userProfile",
             key: "id"
         },
+        allowNull: true
     },
     paymentDetailsId: {
         type: DataTypes.INTEGER,
@@ -66,6 +67,7 @@ OrderDetails.init(
             model: "paymentDetails",
             key: "id"
         },
+        allowNull: true
     }
 },
 {
