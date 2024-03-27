@@ -20,6 +20,8 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "mysql2": "^3.9.2",
     "sequelize": "^6.37.1",

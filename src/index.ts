@@ -1,12 +1,14 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import sequelize from "./config/connection";
-// import "./models/index";
+import "./models/index";
 import routes from "./controllers";
+import cors from "cors";
 
 // Initializing dotenv and express
 dotenv.config()
 const app = express();
+app.use(cors<Request>());
 const port = process.env.PORT! || 3001;
 
 // Middleware
