@@ -7,7 +7,7 @@ interface ProductAttributes {
     authorLast: string;
     imgUrl: string;
     description: string
-    isbn: number;
+    isbn: string;
     genre: string;
     priceInCents: number;
     createdAt: Date;
@@ -22,7 +22,7 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> implem
     public authorLast!: string;
     public imgUrl!: string;
     public description!: string;
-    public isbn!: number;
+    public isbn!: string;
     public genre!: string;
     public priceInCents!: number;
 
@@ -57,7 +57,7 @@ Product.init(
         allowNull: false,
     },
     isbn: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(20),
         allowNull: false,
     },
     genre: {

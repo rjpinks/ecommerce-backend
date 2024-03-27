@@ -49,7 +49,7 @@ UserAddress.init(
         allowNull: false,
     },
     postalCode: {
-        type: DataTypes.SMALLINT,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     country: {

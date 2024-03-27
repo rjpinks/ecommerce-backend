@@ -36,14 +36,14 @@ UserPayment.init(
     paymentType: {
         type: DataTypes.STRING(30),
         allowNull: false,
-        unique: true,
+        unique: false,
     },
     paymentProvider: {
         type: DataTypes.STRING(30),
         allowNull: false,
     },
     accountNumber: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
     },
     expiration: {

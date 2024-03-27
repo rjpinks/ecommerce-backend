@@ -12,11 +12,6 @@ const port = process.env.PORT!;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Stand in route
-app.get('/', (req: Request, res: Response) => {
-    res.send('Why this no make tables :(');
-});
-
 // Starts the app
 sequelize.sync({ force: true }).then(() => {
   app.listen(port, () => {

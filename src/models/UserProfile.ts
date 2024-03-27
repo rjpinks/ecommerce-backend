@@ -87,7 +87,7 @@ UserProfile.init(
     },
     modifiedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
 },
 {
