@@ -7,7 +7,7 @@ import UserAddress from "./UserAddress";
 import PaymentDetails from "./PaymentDetails";
 
 
-module.exports = {
+export default {
     OrderDetails,
     PaymentDetails,
     Product,
